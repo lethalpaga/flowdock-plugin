@@ -38,7 +38,7 @@ public class FlowdockNotifier extends Notifier {
     private final boolean notifyAborted;
     private final boolean notifyNotBuilt;
 
-    // Fields in config.jelly must match the parameter names in the "DataBoundConstructor"
+    // Fields in config-detail.jelly must match the parameter names in the "DataBoundConstructor"
     @DataBoundConstructor
     public FlowdockNotifier(String flowToken, String notificationTags, String chatNotification,
         String notifySuccess, String notifyFailure, String notifyFixed, String notifyUnstable,

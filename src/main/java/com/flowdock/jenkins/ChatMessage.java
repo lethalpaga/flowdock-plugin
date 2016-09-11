@@ -1,19 +1,30 @@
 package com.flowdock.jenkins;
 
+import com.flowdock.jenkins.exception.FlowdockException;
+import hudson.Extension;
 import hudson.model.AbstractBuild;
 import hudson.model.BuildListener;
 import hudson.model.Hudson;
 import hudson.model.Result;
+import org.kohsuke.stapler.DataBoundConstructor;
+import org.kohsuke.stapler.DataBoundSetter;
 
 import java.io.UnsupportedEncodingException;
 
 public class ChatMessage extends FlowdockMessage {
     protected String externalUserName;
 
+    @DataBoundConstructor
     public ChatMessage() {
         this.externalUserName = "Jenkins";
     }
 
+    @Override
+    public void send(FlowdockAPI api) throws FlowdockException {
+        api.pushChatMessage(this);
+    }
+
+    @DataBoundSetter
     public void setExternalUserName(String externalUserName) {
         this.externalUserName = externalUserName;
     }
@@ -71,5 +82,12 @@ public class ChatMessage extends FlowdockMessage {
 
         msg.setContent(content.toString());
         return msg;
+    }
+
+    @Extension
+    public static class DescriptorImpl extends FlowdockMessageDescriptor {
+        public String getDisplayName() {
+            return "Chat message";
+        }
     }
 }
